@@ -16,12 +16,24 @@ spring:
             enabled: true
 
     routes:
-      - id: product_service_v1
+      - id: customer_microservice
         uri: 'http://localhost:8081'
         predicates:
-          - Path=/product/**
+          - Path=/customer/**
           - Query=src,mobile
-      - id: account_microservice
+      - id: banckcredit_microservice
+        uri: lb://banckcredit_microservice
+        predicates:
+          - Path=/credit/**
+      - id: banckaccount_microservice
         uri: lb://account-microservice
         predicates:
           - Path=/account/**
+      - id: movementaccount_microservice
+        uri: lb://movementaccount_microservice
+        predicates:
+          - Path=/movement/account/**
+      - id: movementcredit_microservice
+        uri: lb://movementcredit_microservice
+        predicates:
+          - Path=/movement/credit/**
