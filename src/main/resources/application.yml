@@ -1,8 +1,20 @@
 server:
-  port: 9090
+  port: 9998
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:9999/eureka/
+        
 spring:
+  application:
+      name: api-gateway-service
   cloud: 
-   gateway: 
+   gateway:
+    discovery:
+        locator:
+            enabled: true
+
     routes:
       - id: product_service_v1
         uri: 'http://localhost:8081'
@@ -10,6 +22,6 @@ spring:
           - Path=/product/**
           - Query=src,mobile
       - id: account_microservice
-        uri: 'http://localhost:8081'
+        uri: lb://account-microservice
         predicates:
           - Path=/account/**
